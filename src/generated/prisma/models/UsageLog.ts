@@ -176,8 +176,8 @@ export type UsageLogGroupByOutputType = {
   userId: string
   equipmentsId: string
   startTime: Date
-  endTime: Date
-  purpose: string | null
+  endTime: Date | null
+  purpose: string
   notes: string
   createdAt: Date
   updatedAt: Date
@@ -209,8 +209,8 @@ export type UsageLogWhereInput = {
   userId?: Prisma.StringFilter<"UsageLog"> | string
   equipmentsId?: Prisma.StringFilter<"UsageLog"> | string
   startTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  purpose?: Prisma.StringNullableFilter<"UsageLog"> | string | null
+  endTime?: Prisma.DateTimeNullableFilter<"UsageLog"> | Date | string | null
+  purpose?: Prisma.StringFilter<"UsageLog"> | string
   notes?: Prisma.StringFilter<"UsageLog"> | string
   createdAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
@@ -223,8 +223,8 @@ export type UsageLogOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   equipmentsId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
-  endTime?: Prisma.SortOrder
-  purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  endTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  purpose?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -240,8 +240,8 @@ export type UsageLogWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"UsageLog"> | string
   equipmentsId?: Prisma.StringFilter<"UsageLog"> | string
   startTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  purpose?: Prisma.StringNullableFilter<"UsageLog"> | string | null
+  endTime?: Prisma.DateTimeNullableFilter<"UsageLog"> | Date | string | null
+  purpose?: Prisma.StringFilter<"UsageLog"> | string
   notes?: Prisma.StringFilter<"UsageLog"> | string
   createdAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
@@ -254,8 +254,8 @@ export type UsageLogOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   equipmentsId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
-  endTime?: Prisma.SortOrder
-  purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  endTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  purpose?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -272,8 +272,8 @@ export type UsageLogScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"UsageLog"> | string
   equipmentsId?: Prisma.StringWithAggregatesFilter<"UsageLog"> | string
   startTime?: Prisma.DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
-  endTime?: Prisma.DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
-  purpose?: Prisma.StringNullableWithAggregatesFilter<"UsageLog"> | string | null
+  endTime?: Prisma.DateTimeNullableWithAggregatesFilter<"UsageLog"> | Date | string | null
+  purpose?: Prisma.StringWithAggregatesFilter<"UsageLog"> | string
   notes?: Prisma.StringWithAggregatesFilter<"UsageLog"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
@@ -282,8 +282,8 @@ export type UsageLogScalarWhereWithAggregatesInput = {
 export type UsageLogCreateInput = {
   id?: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -296,8 +296,8 @@ export type UsageLogUncheckedCreateInput = {
   userId: string
   equipmentsId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -306,8 +306,8 @@ export type UsageLogUncheckedCreateInput = {
 export type UsageLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -320,8 +320,8 @@ export type UsageLogUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   equipmentsId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -332,8 +332,8 @@ export type UsageLogCreateManyInput = {
   userId: string
   equipmentsId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -342,8 +342,8 @@ export type UsageLogCreateManyInput = {
 export type UsageLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -354,8 +354,8 @@ export type UsageLogUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   equipmentsId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -491,15 +491,15 @@ export type UsageLogUncheckedUpdateManyWithoutEquipmentNestedInput = {
   deleteMany?: Prisma.UsageLogScalarWhereInput | Prisma.UsageLogScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type UsageLogCreateWithoutUserInput = {
   id?: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -510,8 +510,8 @@ export type UsageLogUncheckedCreateWithoutUserInput = {
   id?: string
   equipmentsId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -551,8 +551,8 @@ export type UsageLogScalarWhereInput = {
   userId?: Prisma.StringFilter<"UsageLog"> | string
   equipmentsId?: Prisma.StringFilter<"UsageLog"> | string
   startTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  endTime?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
-  purpose?: Prisma.StringNullableFilter<"UsageLog"> | string | null
+  endTime?: Prisma.DateTimeNullableFilter<"UsageLog"> | Date | string | null
+  purpose?: Prisma.StringFilter<"UsageLog"> | string
   notes?: Prisma.StringFilter<"UsageLog"> | string
   createdAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UsageLog"> | Date | string
@@ -561,8 +561,8 @@ export type UsageLogScalarWhereInput = {
 export type UsageLogCreateWithoutEquipmentInput = {
   id?: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -573,8 +573,8 @@ export type UsageLogUncheckedCreateWithoutEquipmentInput = {
   id?: string
   userId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -610,8 +610,8 @@ export type UsageLogCreateManyUserInput = {
   id?: string
   equipmentsId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -620,8 +620,8 @@ export type UsageLogCreateManyUserInput = {
 export type UsageLogUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -632,8 +632,8 @@ export type UsageLogUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   equipmentsId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -643,8 +643,8 @@ export type UsageLogUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   equipmentsId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,8 +654,8 @@ export type UsageLogCreateManyEquipmentInput = {
   id?: string
   userId: string
   startTime: Date | string
-  endTime: Date | string
-  purpose?: string | null
+  endTime?: Date | string | null
+  purpose: string
   notes: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -664,8 +664,8 @@ export type UsageLogCreateManyEquipmentInput = {
 export type UsageLogUpdateWithoutEquipmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -676,8 +676,8 @@ export type UsageLogUncheckedUpdateWithoutEquipmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,8 +687,8 @@ export type UsageLogUncheckedUpdateManyWithoutEquipmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -775,8 +775,8 @@ export type $UsageLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     userId: string
     equipmentsId: string
     startTime: Date
-    endTime: Date
-    purpose: string | null
+    endTime: Date | null
+    purpose: string
     notes: string
     createdAt: Date
     updatedAt: Date

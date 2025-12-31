@@ -58,8 +58,8 @@ model UsageLog {
   equipmentsId String
 
   startTime DateTime
-  endTime   DateTime
-  purpose   String?
+  endTime   DateTime?
+  purpose   String
   notes     String
 
   user      User      @relation(fields: [userId], references: [id])
