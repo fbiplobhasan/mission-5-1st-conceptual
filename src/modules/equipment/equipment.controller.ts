@@ -8,9 +8,21 @@ const createEquipment: RequestHandler = async (req, res) => {
       data: payload,
     });
     res.send({ message: "Equipment Added", data: equipment });
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getEquipment: RequestHandler = async (req, res) => {
+  try {
+    const data = await prisma.equipment.findMany();
+    res.send({ message: "Equipments", data });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const equipmentController = {
   createEquipment,
+  getEquipment,
 };
