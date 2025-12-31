@@ -28,4 +28,42 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  usageLogs UsageLog[]
+}
+
+enum EquipmentStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+}
+
+model Equipment {
+  id           String          @id @default(uuid())
+  name         String
+  serialNumber String
+  status       EquipmentStatus @default(AVAILABLE)
+  location     String
+  metadata     Json?
+
+  usageLogs UsageLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UsageLog {
+  id           String @id @default(uuid())
+  userId       String
+  equipmentsId String
+
+  startTime DateTime
+  endTime   DateTime
+  purpose   String?
+  notes     String
+
+  user      User      @relation(fields: [userId], references: [id])
+  equipment Equipment @relation(fields: [equipmentsId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
