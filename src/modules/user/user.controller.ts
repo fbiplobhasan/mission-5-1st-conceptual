@@ -18,14 +18,17 @@ const login: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return res.send({ message: "User not found." });
+  if (!user) return res.status(404).send({ message: "User not found." });
 
   const matchPass = await bcrypt.compare(password, user.password);
-  if (!matchPass) return res.send({ message: "Invalid password" });
+  if (!matchPass) return res.status(401).send({ message: "Invalid password" });
 
-  const token = jwt.sign({ id: user.id, role: user.role }, "very secret", {
-    expiresIn: "7d",
-  });
+  // ✅ Use environment variable for secret
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "7d" }
+  );
 
   res.send({ message: "Logged in successfully.", token });
 };

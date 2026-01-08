@@ -1,8 +1,17 @@
 import express from "express";
 import cors from "cors";
 import routes from "./routes";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./lib/auth";
 
 const app = express();
+
+cors({
+  origin: process.env.CLIENT_SIDE_URL,
+  credentials: true,
+});
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(express.json());
 app.use(cors());

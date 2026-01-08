@@ -2,7 +2,6 @@ import { RequestHandler } from "express";
 import { prisma } from "../../lib/prisma";
 
 const createUsageLog: RequestHandler = async (req, res) => {
-  console.log(req.user)
   const payload = req.body;
   try {
     const log = await prisma.usageLog.create({

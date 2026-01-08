@@ -1,6 +1,6 @@
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { Role } from "../generated/prisma/enums";
-import jwt, { JwtPayload } from "jsonwebtoken";
 
 declare global {
   namespace Express {
@@ -10,23 +10,57 @@ declare global {
   }
 }
 
-const auth = (role?: Role[]) => {
+export const auth = (roles?: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) res.send({ message: "Please provide valid token." });
-
     try {
-      const decoded = jwt.verify(token as string, "verify secret");
-      console.log(decoded);
-      if (!decoded) return res.send("Unauthorized access.");
+      const authHeader = req.headers.authorization;
 
-      req.user = decoded as JwtPayload;
+      if (!authHeader) {
+        return res.status(401).json({
+          message: "Authorization header missing",
+        });
+      }
+
+      const token = authHeader.split(" ")[1];
+
+      if (!token) {
+        return res.status(401).json({
+          message: "Please provide valid token",
+        });
+      }
+
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET as string
+      ) as JwtPayload;
+
+      console.log(decoded)
+
+      if (!decoded) {
+        return res.status(401).json({
+          message: "Unauthorized access",
+        });
+      }
+
+      // attach user to request
+      req.user = decoded;
+
+      // 🔐 Role-based access control
+      if (roles && roles.length > 0) {
+        const userRole = decoded.role;
+
+        if (!roles.includes(userRole)) {
+          return res.status(403).json({
+            message: "Forbidden: insufficient permission",
+          });
+        }
+      }
 
       next();
     } catch (error) {
-      console.error(error);
+      return res.status(401).json({
+        message: "Invalid or expired token",
+      });
     }
   };
 };
-
-export default auth;
