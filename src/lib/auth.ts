@@ -4,33 +4,24 @@ import { prisma } from "./prisma";
 import { twoFactor } from "better-auth/plugins";
 import { Resend } from "resend";
 import { admin } from "better-auth/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
+import { adminRole, userRole } from "./permissions";
 
 const resend = new Resend("re_gQ7dh4p7_7bjnEHEsoe4C9brUM68VUyVb");
 
-const statement = {
-  user: ["create", "read", "update", "delete"],
-  equipment: ["create", "read", "update", "delete"],
-} as const;
-
-const ac = createAccessControl(statement);
-
-export const adminRole = ac.newRole({
-  user: ["create", "read", "update", "delete"],
-  equipment: ["create", "read", "update", "delete"],
-});
-
-export const userRole = ac.newRole({
-  equipment: ["read", "update"],
-});
-
 export const auth = betterAuth({
   appName: "my-first-github-app",
+  baseURL: process.env.BETTER_AUTH_URL,
+  basePath: "/api/v1/auth",
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
 
   trustedOrigins: [process.env.CLIENT_SIDE_URL!],
+  rateLimit: {
+    enabled: true,
+    window: 60,
+    max: 100,
+  },
 
   emailAndPassword: {
     enabled: true,

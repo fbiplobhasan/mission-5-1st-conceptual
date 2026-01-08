@@ -13,26 +13,6 @@ declare global {
 
 export const auth = (resource: "user" | "equipment", action: string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    // const token = req.headers.authorization?.split(" ")[1];
-
-    //       if (!token) {
-    //        res.send("Please provide token.");
-    //       }
-
-    //     try {
-    //       const decoded = jwt.verify(
-    //         token as string, "very secret"
-    //       );
-
-    //       if (!decoded) {
-    //         return res.send("Unauthorized");
-    //       }
-
-    //       req.user = decoded as JwtPayload;
-
-    //         if (roles && !roles.includes(req.user.role)) {
-    //           return res.send("Forbidden"),
-    //         }
     try {
       const session = await betterAuth.api.getSession({
         headers: req.headers,
