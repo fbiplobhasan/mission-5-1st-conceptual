@@ -4,8 +4,25 @@ import { prisma } from "./prisma";
 import { twoFactor } from "better-auth/plugins";
 import { Resend } from "resend";
 import { admin } from "better-auth/plugins";
+import { createAccessControl } from "better-auth/plugins/access";
 
 const resend = new Resend("re_gQ7dh4p7_7bjnEHEsoe4C9brUM68VUyVb");
+
+const statement = {
+  user: ["create", "read", "update", "delete"],
+  equipment: ["create", "read", "update", "delete"],
+} as const;
+
+const ac = createAccessControl(statement);
+
+export const adminRole = ac.newRole({
+  user: ["create", "read", "update", "delete"],
+  equipment: ["create", "read", "update", "delete"],
+});
+
+export const userRole = ac.newRole({
+  equipment: ["read", "update"],
+});
 
 export const auth = betterAuth({
   appName: "my-first-github-app",
@@ -28,7 +45,14 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin(),
+    admin({
+      adminRoles: ["admin", "user"],
+      defaultRole: "user",
+      roles: {
+        admin: adminRole,
+        user: userRole,
+      },
+    }),
     twoFactor({
       otpOptions: {
         period: 2, //koto minutes meyad thakbe

@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { Role } from "../generated/prisma/enums";
+import { auth as betterAuth } from "../lib/auth";
 
 declare global {
   namespace Express {
@@ -10,57 +11,55 @@ declare global {
   }
 }
 
-export const auth = (roles?: Role[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const auth = (resource: "user" | "equipment", action: string) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    // const token = req.headers.authorization?.split(" ")[1];
+
+    //       if (!token) {
+    //        res.send("Please provide token.");
+    //       }
+
+    //     try {
+    //       const decoded = jwt.verify(
+    //         token as string, "very secret"
+    //       );
+
+    //       if (!decoded) {
+    //         return res.send("Unauthorized");
+    //       }
+
+    //       req.user = decoded as JwtPayload;
+
+    //         if (roles && !roles.includes(req.user.role)) {
+    //           return res.send("Forbidden"),
+    //         }
     try {
-      const authHeader = req.headers.authorization;
+      const session = await betterAuth.api.getSession({
+        headers: req.headers,
+      });
 
-      if (!authHeader) {
-        return res.status(401).json({
-          message: "Authorization header missing",
+      if (!session)
+        return res.status(401).send({
+          message: "Unauthorized.",
         });
-      }
 
-      const token = authHeader.split(" ")[1];
+      const hasPermission = await betterAuth.api.userHasPermission({
+        body: {
+          userId: session?.user.id,
+          role: session?.user.role || ("user" as any),
+          permission: { [resource]: [action] },
+        },
+      });
 
-      if (!token) {
-        return res.status(401).json({
-          message: "Please provide valid token",
+      if (!hasPermission || !hasPermission.success) {
+        return res.status(401).send({
+          message: `Forbidden You do not have permission to ${action} ${resource}`,
         });
-      }
-
-      const decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET as string
-      ) as JwtPayload;
-
-      console.log(decoded)
-
-      if (!decoded) {
-        return res.status(401).json({
-          message: "Unauthorized access",
-        });
-      }
-
-      // attach user to request
-      req.user = decoded;
-
-      // 🔐 Role-based access control
-      if (roles && roles.length > 0) {
-        const userRole = decoded.role;
-
-        if (!roles.includes(userRole)) {
-          return res.status(403).json({
-            message: "Forbidden: insufficient permission",
-          });
-        }
       }
 
       next();
     } catch (error) {
-      return res.status(401).json({
-        message: "Invalid or expired token",
-      });
+      console.log(error);
     }
   };
 };
