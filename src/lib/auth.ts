@@ -23,6 +23,10 @@ export const auth = betterAuth({
     max: 100,
   },
 
+  advanced: {
+    cookiePrefix: "My app",
+  },
+
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
