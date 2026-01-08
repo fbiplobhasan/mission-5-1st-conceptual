@@ -1,8 +1,13 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
+import { twoFactor } from "better-auth/plugins";
+import { Resend } from "resend";
+
+const resend = new Resend("re_gQ7dh4p7_7bjnEHEsoe4C9brUM68VUyVb");
 
 export const auth = betterAuth({
+  appName: "my-first-github-app",
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
@@ -18,6 +23,23 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      redirectURI: `${process.env.CLIENT_SIDE_URL}/api/auth/callback/github`,
     },
   },
+  plugins: [
+    twoFactor({
+      otpOptions: {
+        period: 2, //koto minutes meyad thakbe
+        async sendOTP({ user, otp }, ctx) {
+          console.log({ user, otp });
+          await resend.emails.send({
+            from: "My app <onboarding@resend.dev>",
+            to: user.email,
+            subject: "Two factor authentication.",
+            html: `<p><b>${otp}</b></p>`,
+          });
+        },
+      },
+    }),
+  ],
 });
