@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import { twoFactor } from "better-auth/plugins";
 import { Resend } from "resend";
+import { admin } from "better-auth/plugins";
 
 const resend = new Resend("re_gQ7dh4p7_7bjnEHEsoe4C9brUM68VUyVb");
 
@@ -27,6 +28,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    admin(),
     twoFactor({
       otpOptions: {
         period: 2, //koto minutes meyad thakbe
